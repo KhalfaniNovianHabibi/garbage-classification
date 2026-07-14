@@ -93,6 +93,12 @@ def show_eda():
         round(total_images / len(class_counts))
     )
 
+    st.info(
+        """
+        Dataset terdiri dari **5 kategori sampah** dengan distribusi gambar yang relatif seimbang.
+        Hal ini membantu model CNN mempelajari karakteristik setiap kelas secara lebih adil dan mengurangi potensi bias selama proses pelatihan.
+        """
+        )
 
     # =====================================================
     # CLASS DISTRIBUTION
@@ -125,21 +131,26 @@ def show_eda():
 
     plt.xticks(rotation=20)
 
-    plt.xticks(rotation=20)
+    ax.grid(
+        axis="y",
+        linestyle="--",
+        alpha=0.3
+    )
 
     plt.tight_layout()
 
     st.pyplot(fig)
 
-    st.info(
-    """
-    **Insight**
+    st.success(
+        """
+        **Insight**
 
-    Distribusi jumlah gambar pada setiap kelas relatif seimbang.
-    Hal ini membantu model CNN belajar secara lebih adil terhadap
-    masing-masing kategori dan mengurangi potensi bias pada kelas tertentu.
-    """
-    )
+        Distribusi jumlah gambar pada setiap kelas relatif seimbang sehingga setiap 
+        kategori memiliki representasi data yang cukup untuk proses pelatihan. 
+        Kondisi ini membantu model CNN mempelajari pola visual secara 
+        lebih merata dan mengurangi kemungkinan bias terhadap kelas tertentu.
+        """
+        )
 
 
     # =====================================================
@@ -153,26 +164,30 @@ def show_eda():
     fig, ax = plt.subplots(figsize=(7, 7))
 
     ax.pie(
-        counts,
-        labels=classes,
-        autopct="%1.1f%%",
-        startangle=90
-    )
+    counts,
+    labels=[cls.replace("-", " ").title() for cls in classes],
+    autopct="%1.1f%%",
+    startangle=90,
+    pctdistance=0.8
+)
 
     ax.axis("equal")
+
     ax.set_title("Percentage of Images per Class")
 
+    plt.tight_layout()
     st.pyplot(fig)
 
-    st.info(
-    """
-    **Insight**
+    st.success(
+        """
+        **Insight**
 
-    Persentase gambar antar kelas cukup merata.
-    Distribusi yang seimbang membuat proses training lebih stabil
-    karena setiap kelas memiliki representasi yang hampir sama.
-    """
-    )
+        Persentase gambar pada setiap kelas relatif seimbang sehingga 
+        tidak terdapat perbedaan distribusi yang signifikan. 
+        Kondisi ini membantu model menghasilkan proses pembelajaran yang 
+        lebih stabil dan meningkatkan kemampuan generalisasi pada seluruh kategori sampah.
+        """
+        )
 
 
     # =====================================================
@@ -206,6 +221,13 @@ def show_eda():
 
     st.subheader("🖼 Sample Images")
 
+    st.write(
+        """
+        Berikut merupakan contoh gambar dari masing-masing kategori sampah
+        yang digunakan pada proses pelatihan model CNN.
+        """
+        )
+
     cols = st.columns(len(sample_images))
 
     for col, (cls, img_path) in zip(cols, sample_images.items()):
@@ -220,15 +242,17 @@ def show_eda():
                 use_container_width=True
             )
 
-    st.info(
-    """
-    **Insight**
+    st.markdown("---")
 
-    Setiap kelas memiliki karakteristik visual yang berbeda.
-    Perbedaan warna, bentuk, tekstur, dan material menjadi informasi
-    penting yang dipelajari oleh model CNN untuk membedakan setiap kategori.
-    """
-    )
+    st.info(
+        """
+        **Insight**
+
+        Setiap kelas memiliki karakteristik visual yang berbeda.
+        Perbedaan warna, bentuk, tekstur, dan material menjadi informasi
+        penting yang dipelajari oleh model CNN untuk membedakan setiap kategori.
+        """
+        )
 
 
     # =====================================================
@@ -238,6 +262,13 @@ def show_eda():
     st.divider()
 
     st.subheader("♻️ Waste Categories Characteristics")
+
+    st.write(
+        """
+        Karakteristik berikut membantu menjelaskan ciri visual utama dari setiap kategori sampah
+        yang dipelajari oleh model CNN selama proses pelatihan.
+        """
+        )
 
     characteristics = {
 
@@ -315,7 +346,9 @@ def show_eda():
 
     for cls in class_counts.keys():
 
-        with st.expander(cls.replace("-", " ").title()):
+        with st.expander(
+                f"📂 {cls.replace('-', ' ').title()}"
+            ):
 
             col1, col2 = st.columns([1, 2])
 
@@ -326,6 +359,10 @@ def show_eda():
                 )
 
             with col2:
+                
+                st.markdown(
+                    f"**Kategori:** {cls.replace('-', ' ').title()}"
+                )
 
                 st.markdown("#### Karakteristik")
 
@@ -337,6 +374,15 @@ def show_eda():
                 for item in characteristics[cls]["contoh"]:
                     st.write(f"• {item}")
 
+    st.success(
+    """
+    **Insight**
+
+    Setiap kategori memiliki karakteristik visual yang berbeda, seperti warna, bentuk,
+    tekstur, dan material. Perbedaan karakteristik inilah yang dipelajari oleh model CNN
+    untuk membedakan masing-masing kelas selama proses klasifikasi.
+    """
+    )
 
     # =====================================================
     # IMAGE RESOLUTION
@@ -345,6 +391,14 @@ def show_eda():
     st.divider()
 
     st.subheader("📏 Image Resolution")
+
+    st.write(
+    """
+    Resolusi gambar pada dataset tidak seluruhnya sama. Oleh karena itu,
+    setiap gambar akan diubah menjadi ukuran yang seragam sebelum digunakan
+    sebagai input model CNN.
+    """
+    )
 
     widths = [w for w, h in image_sizes]
     heights = [h for w, h in image_sizes]
@@ -390,7 +444,11 @@ def show_eda():
         hide_index=True
     )
 
-    st.info("""
+    st.caption(
+        "Statistik resolusi dihitung berdasarkan beberapa sampel gambar dari setiap kelas."
+    )
+
+    st.success("""
     **Insight**
 
     Resolusi gambar pada dataset bervariasi. Oleh karena itu seluruh gambar
@@ -405,6 +463,13 @@ def show_eda():
     st.divider()
 
     st.subheader("🧹 Ringkasan Preprocessing")
+
+    st.write(
+        """
+    Tahapan preprocessing yang digunakan pada deployment dibuat sama
+    dengan proses training sehingga hasil prediksi tetap konsisten.
+    """
+    )
 
     col1, col2 = st.columns(2)
 
@@ -444,7 +509,7 @@ def show_eda():
     untuk proses klasifikasi.
     """)
 
-        st.info("""
+        st.success("""
     **Insight**
 
     Tahapan preprocessing bertujuan untuk membuat seluruh gambar memiliki

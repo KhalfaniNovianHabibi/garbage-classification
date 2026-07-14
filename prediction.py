@@ -136,10 +136,12 @@ def show_prediction():
         # PREDICTION
         # ===============================================
 
-        prediction = model.predict(
-            image_input,
-            verbose=0
-        )
+        with st.spinner("Melakukan prediksi..."):
+
+            prediction = model.predict(
+                image_input,
+                verbose=0
+            )
 
         predicted_index = np.argmax(prediction)
 
@@ -162,16 +164,25 @@ def show_prediction():
         with col1:
 
             st.metric(
-                "Predicted Class",
+                "♻️ Predicted Class",
                 DISPLAY_NAMES[predicted_label]
             )
 
         with col2:
 
             st.metric(
-                "Confidence Score",
+                "🎯 Confidence Score",
                 f"{confidence*100:.2f}%"
             )
+
+        if confidence >= 0.90:
+            st.success("✅ Model memiliki tingkat keyakinan yang sangat tinggi terhadap hasil prediksi.")
+
+        elif confidence >= 0.70:
+            st.info("ℹ️ Model memiliki tingkat keyakinan yang cukup baik terhadap hasil prediksi.")
+
+        else:
+            st.warning("⚠️ Tingkat keyakinan model masih rendah. Gunakan gambar yang lebih jelas atau objek yang lebih fokus.")
 
         st.divider()
 
@@ -196,8 +207,14 @@ def show_prediction():
 
         st.subheader("📋 Probabilitas Setiap Kelas")
 
+        st.write(
+            "Berikut merupakan probabilitas prediksi untuk setiap kelas berdasarkan hasil inferensi model CNN."
+        )
+
         st.dataframe(
-            result_df,
+            result_df.style.format({
+                "Probability (%)": "{:.2f}"
+            }),
             use_container_width=True,
             hide_index=True
         )
@@ -232,6 +249,23 @@ def show_prediction():
         ax.set_xlabel("Class")
         ax.set_title("Prediction Probability")
 
+        ax.set_ylim(0, 100)
+
+        ax.grid(
+            axis="y",
+            linestyle="--",
+            alpha=0.4
+        )
+
         plt.xticks(rotation=20)
 
         st.pyplot(fig)
+
+        st.info(
+            """
+        **Insight**
+
+        Grafik menunjukkan distribusi probabilitas prediksi untuk seluruh kelas.
+        Semakin tinggi nilai probabilitas pada suatu kelas, semakin besar tingkat keyakinan model bahwa gambar termasuk ke dalam kategori tersebut.
+        """
+        )

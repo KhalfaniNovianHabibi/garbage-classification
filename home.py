@@ -42,28 +42,28 @@ def show_home():
         st.subheader("📌 Project Overview")
 
         st.info("""
-Project ini bertujuan untuk membangun model **Computer Vision**
-yang mampu mengenali jenis sampah menggunakan pendekatan
-**CNN Image Classification**.
+    Project ini bertujuan untuk membangun model **Computer Vision**
+    yang mampu mengenali jenis sampah menggunakan pendekatan
+    **CNN Image Classification**.
 
-Model dilatih menggunakan dataset Garbage Classification
-dengan lima kategori sampah sehingga dapat membantu proses
-pemilahan sampah secara otomatis.
-""")
+    Model dilatih menggunakan dataset Garbage Classification
+    dengan lima kategori sampah sehingga dapat membantu proses
+    pemilahan sampah secara otomatis.
+    """)
 
     with right:
 
         st.subheader("🎯 Project Objective")
 
         st.success("""
-Mengklasifikasikan gambar sampah menjadi:
+    Mengklasifikasikan gambar sampah menjadi:
 
-- Paper
-- Cardboard
-- Plastic
-- Metal
-- White Glass
-""")
+    - Paper
+    - Cardboard
+    - Plastic
+    - Metal
+    - White Glass
+    """)
 
     st.divider()
 
@@ -78,29 +78,29 @@ Mengklasifikasikan gambar sampah menjadi:
     with c1:
 
         st.markdown("""
-**Dataset**
+    **Dataset**
 
-Garbage Classification Dataset
+    Garbage Classification Dataset
 
-**Framework**
+    **Framework**
 
-- TensorFlow
-- Streamlit
-- NumPy
-- Matplotlib
-""")
+    - TensorFlow
+    - Streamlit
+    - NumPy
+    - Matplotlib
+    """)
 
     with c2:
 
         st.markdown("""
-**Model**
+    **Model**
 
-Convolutional Neural Network (CNN)
+    Convolutional Neural Network (CNN)
 
-**Number of Classes**
+    **Number of Classes**
 
-5 Classes
-""")
+    5 Classes
+    """)
 
     st.divider()
 
@@ -135,21 +135,21 @@ Convolutional Neural Network (CNN)
 
     st.markdown(
         """
-Dataset
+    Dataset
 
-⬇️
+    ⬇️
 
-Preprocessing
+    Preprocessing
 
-⬇️
+    ⬇️
 
-CNN Model
+    CNN Model
 
-⬇️
+    ⬇️
 
-Prediction
-"""
-    )
+    Prediction
+    """
+        )
 
     st.divider()
 
@@ -162,24 +162,49 @@ Prediction
     st.container()
 
     st.markdown("""
-1. Buka menu **Prediction** pada sidebar.
+    1. Buka menu **Prediction** pada sidebar.
 
-2. Upload gambar dengan format:
+    2. Upload gambar dengan format:
 
-   - JPG
-   - JPEG
-   - PNG
+    - JPG
+    - JPEG
+    - PNG
 
-3. Klik tombol **Predict**.
+    3. Klik tombol **Predict**.
 
-4. Sistem akan menampilkan:
+    4. Sistem akan menampilkan:
 
-   - Predicted Class
-   - Confidence Score
-   - Probability setiap kelas
-""")
+    - Predicted Class
+    - Confidence Score
+    - Probability setiap kelas
+    """)
 
     st.divider()
+
+    # =====================================================
+    # DATASET SOURCE
+    # =====================================================
+
+    st.markdown("""
+    Dataset yang digunakan pada project ini berasal dari **Kaggle**.
+
+    **Garbage Classification Dataset**
+
+    Dataset asli memiliki **12 kelas**, namun pada project ini hanya digunakan **5 kelas**, yaitu:
+
+    - 📄 Paper
+    - 📦 Cardboard
+    - 🧴 Plastic
+    - 🥫 Metal
+    - 🍾 White Glass
+
+    Pemilihan lima kelas dilakukan agar model fokus pada kategori sampah yang digunakan selama proses training, evaluasi, dan deployment.
+    """)
+
+    st.link_button(
+        "🔗 Lihat Dataset di Kaggle",
+        "https://www.kaggle.com/datasets/mostafaabla/garbage-classification"
+    )
 
     # =====================================================
     # FOOTER
