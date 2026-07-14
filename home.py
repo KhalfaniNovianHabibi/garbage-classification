@@ -26,7 +26,7 @@ def show_home():
 
     col1.metric("📂 Dataset", "Garbage")
     col2.metric("🤖 Model", "CNN")
-    col3.metric("🗂 Classes", "5")
+    col3.metric("📊 Classes", "5")
     col4.metric("🛠 Framework", "TensorFlow")
 
     st.divider()
@@ -71,7 +71,7 @@ def show_home():
     # DATASET INFORMATION
     # =====================================================
 
-    st.subheader("🗂 Dataset Information")
+    st.subheader("📊 Dataset Information")
 
     c1, c2 = st.columns(2)
 
